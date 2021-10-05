@@ -25,7 +25,8 @@ class SignViewController: UIViewController {
         Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
             guard let strongSelf = self else { return }
             if authResult != nil {
-                let vc = self?.storyboard?.instantiateViewController(identifier: "TabBarConrollerID") as! UITabBarController
+                let vc = self?.storyboard?.instantiateViewController(identifier: "ProfileViewController") as! ProfileViewController
+                vc.setView()
                 vc.modalPresentationStyle = .fullScreen
                 self!.present(vc, animated: true)
             }
