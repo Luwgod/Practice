@@ -332,6 +332,7 @@
                         <outlet property="emailLabel" destination="Mif-ln-EJj" id="BIV-Ri-iyf"/>
                         <outlet property="menuContainerView" destination="2Ut-V1-MSW" id="gcf-3L-dgI"/>
                         <outlet property="nameLabel" destination="Mym-Y6-0iC" id="X9K-DM-JjM"/>
+                        <outlet property="profileImage" destination="ZGy-dH-iqe" id="UAq-4C-Mjd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R7n-hG-siT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

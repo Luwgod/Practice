@@ -31,6 +31,11 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
     
+    
+    @IBOutlet weak var profileImage: UIImageView!
+    
+    
+    
     var ref: DatabaseReference!
     typealias FinishedSetting = () -> ()
 
@@ -39,9 +44,20 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        setView()
+        let tapGR = UITapGestureRecognizer(target: self, action: #selector(self.imageTapped))
+        profileImage.addGestureRecognizer(tapGR)
     }
     
+    
+    @objc func imageTapped(sender: UITapGestureRecognizer) {
+        if sender.state == .ended {
+            let vc = UIImagePickerController()
+            vc.sourceType = .photoLibrary
+            vc.delegate = self
+            vc.allowsEditing = true
+            present(vc, animated: true)
+        }
+    }
     
     func setView(completed: @escaping FinishedSetting) {
         let user = Auth.auth().currentUser
@@ -54,25 +70,26 @@ class ProfileViewController: UIViewController {
             print(error!.localizedDescription)
             return;
           }
-//            print("Started Changing labels")
             self.emailLabel.text = snapshot.childSnapshot(forPath: "email").value as? String ?? "Unknown"
             self.nameLabel.text = (snapshot.childSnapshot(forPath: "name").value as? String ?? "Unknown") + " 👋"
-//            print("Finished changing labels")
-            
-            
+        
             group.leave()
-            
         })
         
         group.notify(queue: .main, execute: {
 //            print("Done with data")
             completed()
         })
-        
-        
-        
-//        completed()
     }
     
     
+}
+
+extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+    }
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        
+    }
 }
