@@ -21,11 +21,14 @@ class LaunchViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         if Auth.auth().currentUser != nil {
             let vc = storyboard?.instantiateViewController(identifier: "ProfileViewController") as! ProfileViewController
+            _ = vc.view
             vc.modalPresentationStyle = .fullScreen
-            vc.setView() { () -> () in
-                print("Presenting view")
+            vc.setView() {
+//                print("presenting view")
                 self.present(vc, animated: true, completion: nil)
             }
+            
+            
         } else {
             let vc = self.storyboard?.instantiateViewController(identifier: "SignViewController") as! SignViewController
             vc.modalPresentationStyle = .fullScreen

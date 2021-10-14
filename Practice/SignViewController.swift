@@ -26,12 +26,13 @@ class SignViewController: UIViewController {
             guard let strongSelf = self else { return }
             if authResult != nil {
                 let vc = self?.storyboard?.instantiateViewController(identifier: "ProfileViewController") as! ProfileViewController
+                _ = vc.view
                 vc.modalPresentationStyle = .fullScreen
-                vc.setView(){ () -> () in
+                
+                vc.setView() {
                     self!.present(vc, animated: true)
                 }
                 
-//                self!.present(vc, animated: true)
             }
         }
     }

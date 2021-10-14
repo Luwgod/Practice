@@ -39,27 +39,39 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setView() {}
+//        setView()
     }
     
     
-    func setView(completed: FinishedSetting) {
+    func setView(completed: @escaping FinishedSetting) {
         let user = Auth.auth().currentUser
+        let group = DispatchGroup()
+        
         ref = Database.database().reference()
+        group.enter()
         ref.child("users/\(user!.uid)").getData(completion: { error, snapshot in
           guard error == nil else {
             print(error!.localizedDescription)
             return;
           }
-            print("Started Changing labels")
+//            print("Started Changing labels")
             self.emailLabel.text = snapshot.childSnapshot(forPath: "email").value as? String ?? "Unknown"
             self.nameLabel.text = (snapshot.childSnapshot(forPath: "name").value as? String ?? "Unknown") + " 👋"
-            print("Finished changing labels")
+//            print("Finished changing labels")
+            
+            
+            group.leave()
+            
+        })
+        
+        group.notify(queue: .main, execute: {
+//            print("Done with data")
+            completed()
         })
         
         
         
-        completed()
+//        completed()
     }
     
     
