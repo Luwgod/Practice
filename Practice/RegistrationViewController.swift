@@ -11,6 +11,7 @@ import Firebase
 class RegistrationViewController: UIViewController {
 
     
+    @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var nameTextField: UITextField!
     
     @IBOutlet weak var emailTextField: UITextField!
@@ -28,6 +29,7 @@ class RegistrationViewController: UIViewController {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if error != nil {
                 print(error)
+                self.errorLabel.text = error?.localizedDescription.description
                 return
             }
             
@@ -45,6 +47,7 @@ class RegistrationViewController: UIViewController {
                     print(err)
                     return
                 }
+                self.errorLabel.text = ""
                 print("Saved user successfully")
             }
             let vc = self.storyboard?.instantiateViewController(identifier: "SignViewController") as! SignViewController
@@ -58,7 +61,7 @@ class RegistrationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        errorLabel.text = ""
         // Do any additional setup after loading the view.
     }
     

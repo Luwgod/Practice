@@ -45,6 +45,7 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         let tapGR = UITapGestureRecognizer(target: self, action: #selector(self.imageTapped))
         profileImage.addGestureRecognizer(tapGR)
         
@@ -91,7 +92,7 @@ class ProfileViewController: UIViewController {
         group.enter()
         profileImageRef.downloadURL { url, error in
           if let error = error {
-            print("ERROR WITH IMAGE")
+            print("NO IMAGE")
             self.profileImage.image = UIImage(named: "avatar")
             group.leave()
             

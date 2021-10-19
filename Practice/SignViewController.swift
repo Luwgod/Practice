@@ -11,6 +11,7 @@ import Firebase
 class SignViewController: UIViewController {
 
     
+    @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var emailTextField: UITextField!
     
     @IBOutlet weak var passwordTextField: UITextField!
@@ -33,6 +34,9 @@ class SignViewController: UIViewController {
                     self!.present(vc, animated: true)
                 }
                 
+            } else {
+                self?.errorLabel.text = "Invalid email or password"
+                
             }
         }
     }
@@ -40,7 +44,7 @@ class SignViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        errorLabel.text = ""
         // Do any additional setup after loading the view.
     }
 
