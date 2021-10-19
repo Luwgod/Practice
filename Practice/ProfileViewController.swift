@@ -51,6 +51,7 @@ class ProfileViewController: UIViewController {
         profileImage.layer.cornerRadius = profileImage.frame.size.width / 2
         profileImage.layer.borderWidth = 4
         profileImage.layer.borderColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        profileImage.contentMode = .scaleAspectFill
         
     }
     
@@ -81,10 +82,6 @@ class ProfileViewController: UIViewController {
             return;
           }
             
-            
-            
-            
-            
             self.emailLabel.text = snapshot.childSnapshot(forPath: "email").value as? String ?? "Unknown"
             self.nameLabel.text = (snapshot.childSnapshot(forPath: "name").value as? String ?? "Unknown") + " 👋"
         
@@ -94,16 +91,19 @@ class ProfileViewController: UIViewController {
         group.enter()
         profileImageRef.downloadURL { url, error in
           if let error = error {
+            print("ERROR WITH IMAGE")
             self.profileImage.image = UIImage(named: "avatar")
+            group.leave()
+            
           } else {
             let data = try? Data(contentsOf: url!)
             self.profileImage.image = UIImage(data: data!)
+            group.leave()
           }
         }
-        group.leave()
+        
         
         group.notify(queue: .main, execute: {
-//            print("Done with data")
             completed()
         })
     }
@@ -125,7 +125,7 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
     
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        
+        picker.dismiss(animated: true, completion: nil)
     }
     
     
@@ -137,7 +137,7 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
         
         let uploadTask = profileImageRef.putData((profileImage.image?.pngData())!, metadata: nil) { (metadata, error) in
           guard let metadata = metadata else {
-            // Uh-oh, an error occurred!
+            // an error occurred!
             return
           }
           // Metadata contains file metadata such as size, content-type.
@@ -145,7 +145,7 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
           // You can also access to download URL after upload.
           profileImageRef.downloadURL { (url, error) in
             guard let downloadURL = url else {
-              // Uh-oh, an error occurred!
+              // an error occurred!
               return
             }
           }

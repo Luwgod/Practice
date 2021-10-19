@@ -47,6 +47,9 @@ class RegistrationViewController: UIViewController {
                 }
                 print("Saved user successfully")
             }
+            let vc = self.storyboard?.instantiateViewController(identifier: "SignViewController") as! SignViewController
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)
           }
         
         
